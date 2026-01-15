@@ -1,0 +1,19 @@
+{
+	"ingredientPattern": "PN,P_,P_",
+	"width": 2,
+	"height": 3,
+	"ingredients": {
+		"N": { "type": "item", "code": "nata-*", "isTool": true},
+		"P": {
+				"type": "item",
+				"code": "yakimatsuitoplank-*",
+			  "name": "material",
+        "allowedVariants": [ "pine-oiled", "pine-light", "pine-moderate", "pine-charred", "redwood-oiled", "redwood-light", "redwood-moderate", "redwood-charred" ],
+				"quantity": 1
+			}
+	},
+	"output": {
+		"type": "block",
+		"code": "yakimatsuitopillar-{material}-north"
+	}
+}

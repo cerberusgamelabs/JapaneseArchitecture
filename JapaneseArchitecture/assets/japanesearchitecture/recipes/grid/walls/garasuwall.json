@@ -1,0 +1,28 @@
+{
+	"ingredientPattern": "FQF,FQF,FPF",
+	"width": 3,
+	"height": 3,
+	"ingredients": {
+		"F": {
+			"type": "item",
+			"code": "japanesearchitecture:oakframe",
+			"quantity": 2
+		},
+		"Q": {
+			"type": "item",
+			"code": "game:clearquartz",
+			"quantity": 2
+		},
+		"P": {
+			"type": "item",
+			"code": "game:plank-*",
+			"name": "wood",
+      "allowedVariants": [ "maple", "pine", "acacia", "walnut", "purpleheart", "ebony" ],
+			"quantity": 2
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "garasuwall-{wood}-north"
+	}
+}

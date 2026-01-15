@@ -1,0 +1,36 @@
+{
+  "code": "hearth",
+  "class": "Block",
+  "shape": {
+    "base": "japanesearchitecture:block/hearth"
+  },
+  "variantgroups": [
+    { "code": "wood",
+      "states": [ "acacia", "birch", "ebony", "kapok", "larch", "maple", "oak", "pine", "purpleheart", "redwood", "walnut" ]
+    },
+    { "code": "border",
+      "states": [ "andesite", "basalt", "chert", "granite", "peridotite" ]
+    }
+  ],
+  "behaviors": [
+    { "name": "Multiblock", "propertiesByType": { "*": { "sizex": 3, "sizey": 1, "sizez": 3, "cposition": { "x": 1, "y": 0, "z": 1 } } } }
+  ],
+  "textures": {
+    "border": { "base": "game:block/stone/drystone/{border}1" },
+    "sand": { "base": "game:block/stone/sand/sandstone" },
+    "floor": { "base": "game:block/wood/planks/{wood}1" }
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready", 
+  "heldTpUseAnimation": "twohandplaceblock",
+  "blockmaterial": "Wood",
+  "lightAbsorption": 0,
+  "creativeinventory": { "general": [ "*" ], "japanesearchitecture": ["*"] },
+  "sidesolidByType": {
+    "*": { "verticals": true, "horizontals": false }
+  },
+  "guiTransform": { "origin": { "x": 0.49, "y": 1, "z": 0.8 }, "scale": 0.73 },
+  "collisionSelectionBoxes": [
+        { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 1, "z2": 1 }
+    ]
+}

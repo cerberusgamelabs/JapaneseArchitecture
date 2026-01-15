@@ -1,0 +1,24 @@
+{
+  "ingredientPattern": "BBB,NBN,BBB",
+  "width": 3,
+  "height": 3,
+  "ingredients": {
+    "B": {
+        "type": "item",
+        "code": "game:plank-*",
+        "name": "wood",
+        "allowedVariants": [ "oak", "acacia", "birch", "ebony", "kapok", "larch", "maple", "pine", "purpleheart", "redwood", "walnut" ]
+    },
+    "N": {
+      "type": "item",
+      "code": "game:metalnailsandstrips-*",
+      "name": "metal",
+      "allowedVariants": [ "iron", "tinbronze", "bismuthbronze", "blackbronze", "gold" ]
+    }
+  },
+  "output": {
+    "type": "block",
+    "code": "tansu-east",
+    "attributes": { "type": "normal-{wood}-{metal}" }
+  }
+}

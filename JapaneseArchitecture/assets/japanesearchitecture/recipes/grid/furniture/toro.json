@@ -1,0 +1,33 @@
+[
+  {
+    "ingredientPattern": "T,L,P",
+    "width": 1,
+    "height": 3,
+    "ingredients": {
+      "T": {
+          "type": "block",
+          "code": "game:rockpolished-*",
+          "name": "stone",
+          "allowedVariants": [ "andesite", "basalt", "bauxite", "chalk", "chert", "claystone", "conglomerate", "granite", "greenmarble", "kimberlite", "limestone", "peridotite", "phyllite", "redmarble", "sandstone", "shale", "slate", "suevite", "whitemarble" ],
+        "quantity": 1
+      },
+      "P": {
+          "type": "block",
+          "code": "game:rockpolished-*",
+          "name": "stone",
+          "allowedVariants": [ "andesite", "basalt", "bauxite", "chalk", "chert", "claystone", "conglomerate", "granite", "greenmarble", "kimberlite", "limestone", "peridotite", "phyllite", "redmarble", "sandstone", "shale", "slate", "suevite", "whitemarble" ],
+        "quantity": 2
+      },
+      "L": {
+        "type": "block",
+        "code": "game:paperlantern-on",
+        "quantity": 1
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "toro-{stone}-north",
+      "stackSize": 8
+    }
+  }
+]

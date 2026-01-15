@@ -1,0 +1,27 @@
+{
+	"editor": {
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {
+	},
+	"textures": {
+		"material": "C:/Users/xolki/source/repos/JapaneseArchitecture/JapaneseArchitecture/assets/japanesearchitecture/textures/block/charredwood"
+	},
+	"elements": [
+		{
+			"name": "Wall",
+			"from": [ 0.0, 0.0, 0.0 ],
+			"to": [ 16.0, 16.0, 2.0 ],
+			"faces": {
+				"north": { "texture": "#material", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "rotation": 90 },
+				"east": { "texture": "#material", "uv": [ 0.0, 0.0, 16.0, 6.0 ], "rotation": 90, "autoUv": false },
+				"south": { "texture": "#material", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "rotation": 90 },
+				"west": { "texture": "#material", "uv": [ 0.0, 0.0, 16.0, 6.0 ], "rotation": 90, "autoUv": false },
+				"up": { "texture": "#material", "uv": [ 0.0, 0.0, 8.0, 16.0 ], "rotation": 90, "autoUv": false },
+				"down": { "texture": "#material", "uv": [ 0.0, 0.0, 8.0, 16.0 ], "rotation": 90, "autoUv": false }
+			}
+		}
+	]}

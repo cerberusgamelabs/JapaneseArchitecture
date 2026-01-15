@@ -1,0 +1,33 @@
+{
+  "code": "byobopanel",
+  "class": "ItemPlank",
+  "shape": {
+    "base": "japanesearchitecture:item/byobopanel"
+  },
+  "variantgroups": [],
+	"maxstacksize": 4,
+	"shape": { "base": "item/byobopanel" },
+	"textures": {
+		"paper": { "base": "game:item/lore/pages" }
+	},
+	"creativeinventory": { "general": ["*"], "items": ["*"], "japanesearchitectureitems": [ "*" ] },
+	"attributes": {
+		"handbook": {
+			"exclude": true
+		}
+	},
+	"materialDensity": 700,
+	"guiTransform": { "origin": { "x": 0.49, "y": 1, "z": 0.8 }, "scale": 0.73 },
+	"fpHandTransform": {
+		"translation": { "x": 0, "y": 0, "z": 0 },
+		"rotation": { "x": 3, "y": -33, "z": -25 },
+		"origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+		"scale": 1.98
+	},
+	"tpHandTransform": {
+		"translation": { "x": -0.6, "y": -0.06, "z": -0.44 },
+		"rotation": { "x": 109, "y": 51, "z": 1 },
+		"origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+		"scale": 0.86
+	}
+}

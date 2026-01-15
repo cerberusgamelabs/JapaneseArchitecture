@@ -1,0 +1,25 @@
+[
+  {
+    "ingredientPattern": "C,D,C",
+    "width": 1,
+    "height": 3,
+    "ingredients": {
+      "C": {
+          "type": "item",
+          "code": "game:cloth-*",
+          "name": "color",
+          "allowedVariants": [ "plain", "mordant", "orange", "black", "red", "blue", "green", "yellow", "white", "gray", "purple", "pink" ]
+      },
+      "D": {
+        "type": "item",
+        "code": "game:drygrass",
+        "quantity": 2
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "zabuton-{color}",
+      "stackSize": 1
+    }
+  }
+]

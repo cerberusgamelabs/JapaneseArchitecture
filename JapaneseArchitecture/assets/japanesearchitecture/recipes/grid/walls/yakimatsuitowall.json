@@ -1,0 +1,39 @@
+[
+	{
+		"ingredientPattern": "P,P,P",
+		"width": 1,
+		"height": 3,
+		"ingredients": {
+			"P": {
+				"type": "item",
+				"code": "yakimatsuitoplank-*",
+			  "name": "material",
+        "allowedVariants": [ "pine-oiled", "pine-light", "pine-moderate", "pine-charred", "redwood-oiled", "redwood-light", "redwood-moderate", "redwood-charred" ],
+				"quantity": 2
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "yakimatsuitowall-{material}-north"
+		}
+	},
+	{
+		"ingredientPattern": "W",
+		"width": 1,
+		"height": 1,
+		"ingredients": {
+			"W": {
+				"type": "block",
+				"code": "yakimatsuitowallcorner-*-north",
+			"name": "material",
+      "allowedVariants": [ "pine-oiled", "pine-light", "pine-moderate", "pine-charred", "redwood-oiled", "redwood-light", "redwood-moderate", "redwood-charred" ],
+				"quantity": 1
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "yakimatsuitowall-{material}-north",
+			"quantity": 2
+		}
+	}
+]

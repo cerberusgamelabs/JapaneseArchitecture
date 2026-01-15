@@ -1,0 +1,9 @@
+{
+	"code": "resinlacquer",
+	"sealHours": 24,
+	"ingredients": [
+		{ "type": "item", "code": "game:waterportion", "litres": 5 },
+		{ "type": "item", "code": "game:resin", "quantity": 1 }
+	],
+	"output": { "type": "item", "code": "resinlacquerportion", "litres": 1 }
+}

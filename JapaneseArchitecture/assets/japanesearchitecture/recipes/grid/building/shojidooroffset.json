@@ -1,0 +1,26 @@
+{
+	"ingredientPattern": "S_,WD",
+	"width": 2,
+	"height": 2,
+	"ingredients": {
+		"S": { "type": "item", "code": "game:saw-*", "isTool": true },
+		"W": {
+			"type": "block",
+			"code": "shojiwall-*-north",
+			"name": "wood",
+      "allowedVariants": [ "maple", "pine", "acacia", "walnut", "purpleheart", "ebony" ],
+			"quantity": 1
+		},
+		"D": {
+			"type": "block",
+			"code": "shojidoor-*-north",
+			"name": "wood",
+      "allowedVariants": [ "maple", "pine", "acacia", "walnut", "purpleheart", "ebony" ],
+			"quantity": 2
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "shojidoubledooroffset-{wood}-north"
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"ingredientPattern": "S,P",
+	"ingredients": {
+		"S": { "type": "item", "code": "game:saw-*", "isTool": true},
+		"P": { "type": "block", "code": "lacqueredwood" }
+	},
+	"width": 1,
+	"height": 2,
+	"output": { "type": "item", "code": "lacqueredboard", "quantity": 12 }
+}

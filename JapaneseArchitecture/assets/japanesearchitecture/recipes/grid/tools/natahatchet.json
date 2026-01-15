@@ -1,0 +1,25 @@
+[
+  {
+    "ingredientPattern": "B,H",
+    "width": 1,
+    "height": 2,
+    "ingredients": {
+      "B": {
+          "type": "item",
+          "code": "natablade-*",
+          "name": "material",
+          "allowedVariants": [ "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel" ]
+      },
+      "H": {
+        "type": "item",
+        "code": "game:stick",
+        "quantity": 1
+      }
+    },
+    "output": {
+      "type": "item",
+      "code": "nata-{material}",
+      "stackSize": 1
+    }
+  }
+]

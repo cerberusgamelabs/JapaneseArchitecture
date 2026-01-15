@@ -1,0 +1,21 @@
+[
+	{
+		"ingredientPattern": "S,P",
+		"ingredients": {
+			"S": { "type": "item", "code": "game:saw-*", "isTool": true },
+			"P": { "type": "block", "code": "game:plaster-plain" }
+		},
+		"width": 1,
+		"height": 2,
+		"output": { "type": "block", "code": "japanesearchitecture:plasterwall-north", "quantity": 4 }
+	},
+	{
+		"ingredientPattern": "W",
+		"ingredients": {
+			"W": { "type": "block", "code": "japanesearchitecture:plasterwallcorner-north"}
+		},
+		"width": 1,
+		"height": 1,
+		"output": { "type": "block", "code": "japanesearchitecture:plasterwall-north", "quantity": 2 }
+	}
+]

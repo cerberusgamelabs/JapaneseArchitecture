@@ -1,0 +1,41 @@
+{
+  "code": "zabuton",
+  "class": "Block",
+  "behaviors": [],
+  "variantgroups": [
+    {
+      "code": "color",
+      "states": [ "plain", "mordant", "blue", "red", "yellow", "green", "purple", "pink", "orange", "brown", "gray", "black", "white" ]
+    }
+  ],
+  "maxstacksize": 1,
+  "shape": { "base": "block/zabuton" },
+  "texturesByType": {
+    "*": { "all": { "base": "game:block/cloth/linen/{color}" } }
+  },
+  "creativeinventory": { "general": [ "*" ], "japanesearchitecture": [ "*" ] },
+  "attributes": {},
+  "materialDensity": 700,
+  "guiTransform": {
+    "translation": { "x": 0, "y": 2, "z": 0 },
+    "rotation": { "x": -55, "y": 94, "z": 27 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.45 },
+    "scale": 1.86
+  },
+  "fpHandTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 3, "y": -33, "z": -25 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 1.98
+  },
+  "tpHandTransform": {
+    "translation": { "x": -0.6, "y": -0.06, "z": -0.44 },
+    "rotation": { "x": 109, "y": 51, "z": 1 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 0.86
+  },
+  "collisionSelectionBoxes": [ { "x1": 0.0625, "y1": 0, "z1": 0.0625, "x2": 0.9375, "y2": 0.125, "z2": 0.9375 } ],
+  "sideopaque": { "all": false },
+  "faceCullMode": "NeverCull",
+  "emitSideAo": { "all": false }
+}

@@ -1,0 +1,99 @@
+[
+	{
+		"ingredientPattern": "__K,MM_,BB_",
+		"width": 3,
+		"height": 3,
+		"ingredients": {
+			"K": {
+				"type": "item", 
+				"code": "game:knife-*", 
+				"isTool": true
+			},
+			"M": {
+				"type": "item",
+				"code": "game:cattailtops",
+				"quantity": 4
+			},
+			"B": {
+				"type": "item",
+				"code": "game:plank-*",
+				"name": "wood",
+        "allowedVariants": [ "acacia", "birch", "ebony", "kapok", "larch", "maple", "oak", "pine", "purpleheart", "redwood", "walnut" ],
+				"quantity": 2
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "tatamihalf-{wood}-north"
+		}
+	},
+	{
+		"ingredientPattern": "__K,MM_,BB_",
+		"width": 3,
+		"height": 3,
+		"ingredients": {
+			"K": {
+				"type": "item", 
+				"code": "game:knife-*", 
+				"isTool": true
+			},
+			"M": {
+				"type": "item",
+				"code": "game:papyrustops",
+				"quantity": 4
+			},
+			"B": {
+				"type": "item",
+				"code": "game:plank-*",
+				"name": "wood",
+        "allowedVariants": [ "acacia", "birch", "ebony", "kapok", "larch", "maple", "oak", "pine", "purpleheart", "redwood", "walnut" ],
+				"quantity": 2
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "tatamihalf-{wood}-north"
+		}
+	},
+	{
+		"ingredientPattern": "R,P",
+		"width": 1,
+		"height": 2,
+		"ingredients": {
+			"R": {
+				"type": "block",
+				"code": "game:rushmat",
+				"quantity": 1
+			},
+			"P": {
+				"type": "block",
+				"code": "game:plank-*",
+				"name": "wood",
+        "allowedVariants": [ "acacia", "birch", "ebony", "kapok", "larch", "maple", "oak", "pine", "purpleheart", "redwood", "walnut" ],
+				"quantity": 1
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "tatamihalf-{wood}-north"
+		}
+	},
+	{
+		"ingredientPattern": "T",
+		"width": 1,
+		"height": 1,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "japanesearchitecture:tatamimid-*-north",
+				"name": "wood",
+        "allowedVariants": [ "acacia", "birch", "ebony", "kapok", "larch", "maple", "oak", "pine", "purpleheart", "redwood", "walnut" ],
+				"quantity": 1
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "tatamihalf-{wood}-north"
+		}
+	}
+]

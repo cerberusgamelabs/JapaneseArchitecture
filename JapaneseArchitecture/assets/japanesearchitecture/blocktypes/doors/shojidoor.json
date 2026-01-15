@@ -1,0 +1,48 @@
+{
+  "code": "shojidoor",
+	"class": "BlockGeneric",
+	"entityClass": "Generic",
+	"behaviors": [ 
+		{ "name": "Lockable" },
+		{ "name": "SlidingDoor" }, 
+		{ "name": "BlockEntityInteract" }
+	],
+	"entityBehaviors": [{ "name": "SlidingDoor" }],
+	"variantgroups": [
+		{ "code": "wood", "states": [ "maple", "pine", "acacia", "walnut", "purpleheart", "ebony" ] }
+	],
+	"attributes": {
+		"airtightByType": { "*": true },
+		"widthByType": { "*": 1 },
+		"heightByType": { "*": 2 },
+		"openSoundByType": { "*": "game:sounds/effect/swoosh" },
+		"closeSoundByType": { "*": "game:sounds/effect/swoosh" },
+		"easingSpeedByType": { "*": 1 }
+	},
+	"creativeinventoryByType": { "*": { "general": ["*"], "japanesearchitecture": ["*"] } },
+	"shape": { "base": "japanesearchitecture:block/shojidoor" },
+	"textures": {
+        "normal1": { "base": "game:block/clay/daub/ash/normal1" },
+        "ebony1": { "base": "game:block/wood/planks/{wood}1" },
+        "oak1": { "base": "game:block/wood/planks/oak1" }
+    },
+	"__comment": "Needs to be no cull pass because for double doors we flip x coords, but indices don't change so i believe that inverts the winding order, making the graphics card believe the face is facing the other direction",
+	"renderPass": "OpaqueNoCull",
+	"faceCullMode": "NeverCull",
+	"blockmaterial": "Wood",
+	"sideAo": { "all": false },
+	"heldTpIdleAnimation": "holdunderarm",
+	"replaceable": 500,
+	"resistance": 3.5,
+	"lightAbsorption": 0,
+	"sidesolid": { "all": false },
+	"sideopaque": { "all": false },
+	"guiTransformByType": { "*": { "origin": { "x": 0.49, "y": 1, "z": 0.8 }, "scale": 0.73 } },
+	"fpHandTransform": { "translation": { "x": -0.77, "y": 0.18, "z": 0.72 }, "rotation": { "x": 98, "y": 42, "z": 0 }, "origin": { "x": 0.5, "y": 0.7, "z": 1 }, "scale": 1.11 },
+	"tpHandTransformByType": { "*": { "translation": { "x": -0.74, "y": -1.22, "z": -1.3 }, "rotation": { "x": 8, "y": 11, "z": 59 }, "origin": { "x": 0.5, "y": 1, "z": 1 }, "scale": 0.71 } },
+	"groundTransformByType": { "*": { "translation": { "x": 0, "y": 0, "z": 0 }, "rotation": { "x": -90, "y": 0, "z": 0 }, "origin": { "x": 0.5, "y": 1, "z": 0.85 }, "scale": 3 } },
+	"collisionSelectionBoxes": [ { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 1, "z2": 0 } ],
+	"combustibleProps": { "burnTemperature": 600, "burnDuration": 25 },
+	"sounds": { "place": "game:block/planks", "hit": "game:block/planks", "break": "game:block/planks", "walk": "game:walk/wood" },
+	"materialDensity": 600
+}

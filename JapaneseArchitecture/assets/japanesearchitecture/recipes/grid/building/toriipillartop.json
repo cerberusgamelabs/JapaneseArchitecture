@@ -1,0 +1,11 @@
+{
+	"ingredientPattern": "DDD,BBB,BPB",
+	"width": 3,
+	"height": 3,
+	"ingredients": {
+		"D": { "type": "item", "code": "darklacqueredboard", "quantity": 1 },
+		"B": { "type": "item", "code": "lacqueredboard", "quantity": 1 },
+		"P": { "type": "block", "code": "toriipillar-north", "quantity": 1 }
+	},
+	"output": { "type": "block", "code": "japanesearchitecture:toriipillartop-north" }
+}

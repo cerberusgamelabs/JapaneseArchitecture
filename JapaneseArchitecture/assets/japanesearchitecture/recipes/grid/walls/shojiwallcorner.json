@@ -1,0 +1,18 @@
+{
+	"ingredientPattern": "W_,_W",
+	"width": 2,
+	"height": 2,
+	"ingredients": {
+		"W": {
+			"type": "block",
+			"code": "japanesearchitecture:shojiwall-*-north",
+			"name": "wood",
+      "allowedVariants": [ "maple", "pine", "acacia", "walnut", "purpleheart", "ebony" ],
+			"quantity": 1
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "shojiwallcorner-{wood}-north"
+	}
+}

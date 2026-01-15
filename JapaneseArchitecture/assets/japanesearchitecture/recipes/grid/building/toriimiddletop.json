@@ -1,0 +1,11 @@
+{
+	"ingredientPattern": "DDD,_L_,BBB",
+	"width": 3,
+	"height": 3,
+	"ingredients": {
+		"D": { "type": "item", "code": "darklacqueredboard", "quantity": 1 },
+		"B": { "type": "item", "code": "lacqueredboard", "quantity": 2 },
+		"L": { "type": "block", "code": "game:paperlantern-on", "quantity": 1 }
+	},
+	"output": { "type": "block", "code": "japanesearchitecture:toriimiddletop-north" }
+}

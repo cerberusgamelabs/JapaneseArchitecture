@@ -1,0 +1,35 @@
+[
+	{
+		"ingredientPattern": "TT",
+		"width": 2,
+		"height": 1,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "tansu-east"
+			}
+		},
+		"copyAttributesFrom": "T",
+		"output": {
+			"type": "block",
+			"code": "tansu2-east"
+		}
+	},
+	{
+		"ingredientPattern": "T",
+		"width": 1,
+		"height": 1,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "tansu-east",
+				"quantity": 2
+			}
+		},
+		"copyAttributesFrom": "T",
+		"output": {
+			"type": "block",
+			"code": "tansu2-east"
+		}
+	}
+]

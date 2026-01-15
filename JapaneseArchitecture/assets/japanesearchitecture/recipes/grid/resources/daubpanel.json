@@ -1,0 +1,32 @@
+[
+	{
+		"ingredientPattern": "S,D",
+		"ingredients": {
+			"S": { "type": "item", "code": "game:saw-*", "isTool": true },
+			"D": { "type": "block", "code": "game:daub-*-normal" }
+		},
+		"width": 1,
+		"height": 2,
+		"output": { "type": "item", "code": "daubpanel", "quantity": 72 }
+	},
+	{
+		"ingredientPattern": "S,D",
+		"ingredients": {
+			"S": { "type": "item", "code": "game:saw-*", "isTool": true },
+			"D": { "type": "block", "code": "game:daub-*-cracked" }
+		},
+		"width": 1,
+		"height": 2,
+		"output": { "type": "item", "code": "daubpanel", "quantity": 66 }
+	},
+	{
+		"ingredientPattern": "S,D",
+		"ingredients": {
+			"S": { "type": "item", "code": "game:saw-*", "isTool": true },
+			"D": { "type": "block", "code": "game:daub-*-wattle" }
+		},
+		"width": 1,
+		"height": 2,
+		"output": { "type": "item", "code": "daubpanel", "quantity": 60 }
+	}
+]

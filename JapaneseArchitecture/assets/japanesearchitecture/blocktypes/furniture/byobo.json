@@ -1,0 +1,53 @@
+{
+  "code": "byobo",
+  "class": "Block",
+  "shape": { "base": "japanesearchitecture:block/byobo", "rotateYByType": { "*-north": 0, "*-east": 270, "*-south": 180, "*-west": 90 } },
+  "variantgroups": [ { "code": "side", "loadFromProperties": "abstract/horizontalorientation" } ],
+  "behaviors": [
+    { "name": "HorizontalOrientable", "properties": { "dropBlockFace": "north" } },
+    {
+      "name": "Multiblock",
+      "propertiesByType": { 
+        "*-north": { "sizex": 4, "sizey": 2, "sizez": 1, "cposition": { "x": 1, "y": 0, "z": 0 } },
+        "*-east": { "sizex": 1, "sizey": 2, "sizez": 4, "cposition": { "x": 0, "y": 0, "z": 1 } },
+        "*-south": { "sizex": 4, "sizey": 2, "sizez": 1, "cposition": { "x": 2, "y": 0, "z": 0 } },
+        "*-west": { "sizex": 1, "sizey": 2, "sizez": 4, "cposition": { "x": 0, "y": 0, "z": 2 } }
+      }
+    }
+  ],
+  "textures": {
+    "oak1": { "base": "game:block/wood/planks/oak1" },
+    "pattern1x1": { "base": "japanesearchitecture:block/pattern1x1" },
+    "pattern1x2": { "base": "japanesearchitecture:block/pattern1x2" },
+    "pattern2x1": { "base": "japanesearchitecture:block/pattern2x1" },
+    "pattern2x2": { "base": "japanesearchitecture:block/pattern2x2" },
+    "pattern3x1": { "base": "japanesearchitecture:block/pattern3x1" },
+    "pattern3x2": { "base": "japanesearchitecture:block/pattern3x2" },
+    "pattern4x1": { "base": "japanesearchitecture:block/pattern4x1" },
+    "pattern4x2": { "base": "japanesearchitecture:block/pattern4x2" },
+    "paper": { "base": "game:item/lore/pages" }
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "blockmaterial": "Wood",
+  "lightAbsorption": 0,
+  "creativeinventory": { "general": [ "*-north" ], "japanesearchitecture": ["*-north"] },
+  "attributes": { "handbook": { "exclude": true } },
+  "faceCullMode": "NeverCull",
+  "emitSideAo": { "all": false },
+  "sidesolidByType": {
+    "*-north": { "verticals": true, "north": true, "horizontals": false },
+    "*-east": { "verticals": true, "east": true, "horizontals": false },
+    "*-west": { "verticals": true, "west": true, "horizontals": false },
+    "*-south": { "verticals": true, "south": true, "horizontals": false }
+  },
+  "sideopaque": { "all": false },
+  "guiTransform": { "origin": { "x": 1.5, "y": 1, "z": 0.8 }, "scale": 0.5 },
+  "collisionSelectionBoxes": [
+    { 
+      "x1": 0.125, "y1": 0, "z1": 0.375, "x2": 0.875, "y2": 1, "z2": 0.6875,
+      "rotateYByType": { "*-north": 0, "*-east": 270, "*-west": 90, "*-south": 180 }
+    }
+  ]
+}

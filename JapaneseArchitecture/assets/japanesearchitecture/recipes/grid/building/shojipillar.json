@@ -1,0 +1,16 @@
+{
+	"ingredientPattern": "F,F,F",
+	"width": 1,
+	"height": 3,
+	"ingredients": {
+		"F": {
+			"type": "item",
+			"code": "japanesearchitecture:oakframe",
+			"quantity": 2
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "shojipillar-north"
+	}
+}

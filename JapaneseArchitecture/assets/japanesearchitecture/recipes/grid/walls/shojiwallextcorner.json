@@ -1,0 +1,16 @@
+{
+	"ingredientPattern": "W_,_W",
+	"width": 2,
+	"height": 2,
+	"ingredients": {
+		"W": {
+			"type": "block",
+			"code": "japanesearchitecture:shojiwallext-*",
+			"quantity": 1
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "shojiwallextcorner-north"
+	}
+}

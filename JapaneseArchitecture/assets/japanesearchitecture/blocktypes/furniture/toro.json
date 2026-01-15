@@ -1,0 +1,28 @@
+{
+  "code": "toro",
+  "class": "Block",
+  "shape": { "base": "japanesearchitecture:block/toro", "rotateYByType": { "*-north": 0, "*-east": 270, "*-south": 180, "*-west": 90 } },
+  "variantgroups": [
+    { "code": "stone", "states": [ "andesite", "basalt", "bauxite", "chalk", "chert", "claystone", "conglomerate", "granite", "greenmarble", "kimberlite", "limestone", "peridotite", "phyllite", "redmarble", "sandstone", "shale", "slate", "suevite", "whitemarble" ] },
+    { "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "behaviors": [
+    { "name": "HorizontalOrientable", "properties": { "dropBlockFace": "north" } }
+  ],
+  "textures": {
+    "stone": { "base": "game:block/stone/polishedrock/{stone}-inside" },
+    "light": { "base": "game:block/metal/paperlantern_on" }
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "blockmaterial": "Stone",
+  "lightAbsorption": 0,
+  "lightHsv": [8, 2, 21],
+  "creativeinventory": { "general": [ "*-north" ], "japanesearchitecture": [ "*-north" ] },
+  "faceCullMode": "NeverCull",
+  "emitSideAo": { "all": false },
+  "sideopaque": { "all": false },
+  "guiTransform": { "origin": { "x": 0.49, "y": 0.49, "z": 0.8 }, "scale": 1.4 },
+  "collisionSelectionBoxes": [{ "x1": 0.31,"y1": 0,"z1": 0.31,"x2": 0.69,"y2": 1.1,"z2": 0.69,"rotateYByType": {"*-north": 0,"*-east": 270,"*-west": 90,"*-south": 180}}]
+}

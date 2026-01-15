@@ -1,0 +1,30 @@
+{
+	"ingredientPattern": "WRW,RSR,WRW",
+	"width": 3,
+	"height": 3,
+	"ingredients": {
+		"W": {
+			"type": "item",
+			"code": "game:plank-*",
+			"name": "wood",
+      "allowedVariants": [ "acacia", "birch", "ebony", "kapok", "larch", "maple", "oak", "pine", "purpleheart", "redwood", "walnut" ],
+			"quantity": 6
+		},
+		"R": {
+			"type": "item",
+			"code": "game:stone-*",
+			"name": "stone",
+      "allowedVariants": [ "andesite", "basalt", "chert", "granite", "peridotite" ],
+			"quantity": 6
+		},
+		"S": {
+			"type": "block",
+			"code": "game:sand-*",
+			"quantity": 2
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "hearth-{wood}-{stone}"
+	}
+}

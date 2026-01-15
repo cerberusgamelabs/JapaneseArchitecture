@@ -1,0 +1,12 @@
+{
+	"ingredient": { "type": "item", "code": "game:ingot-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "silver", "gold", "iron", "meteoriciron", "steel"] },
+	"pattern": [[
+		"________________",
+		"________________",
+		"_############___",
+		"___#########____",
+		"________________"
+	]],
+	"name": "Nata",
+	"output": { "type": "item", "code": "natablade-{metal}"   }
+}

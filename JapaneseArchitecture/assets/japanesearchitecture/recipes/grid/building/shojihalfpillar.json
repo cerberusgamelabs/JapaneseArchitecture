@@ -1,0 +1,13 @@
+{
+	"ingredientPattern": "S,P",
+	"width": 1,
+	"height": 2,
+	"ingredients": {
+		"S": { "type": "item", "code": "game:saw-*", "isTool": true},
+		"P": { "type": "block", "code": "japanesearchitecture:shojipillar-north" }
+	},
+	"output": {
+		"type": "block",
+		"code": "shojihalfpillar-north"
+	}
+}

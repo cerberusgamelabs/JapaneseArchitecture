@@ -1,0 +1,23 @@
+{
+	"ingredientPattern": "BPB,PCP,BPB",
+	"width": 3,
+	"height": 3,
+	"ingredients": {
+		"B": {
+			"type": "item",
+			"code": "game:plank-*"
+		},
+		"P": {
+			"type": "item",
+			"code": "game:paper-parchment"
+		},
+		"C": {
+			"type": "item",
+			"code": "game:candle"
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "game:paperlantern-on"
+	}
+}

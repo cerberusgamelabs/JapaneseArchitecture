@@ -1,0 +1,69 @@
+[
+	{
+		"ingredientPattern": "T,T",
+		"width": 1,
+		"height": 2,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "tansu2-east"
+			}
+		},
+		"copyAttributesFrom": "T",
+		"output": {
+			"type": "block",
+			"code": "tansu3-east"
+		}
+	},
+	{
+		"ingredientPattern": "T",
+		"width": 1,
+		"height": 1,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "tansu2-east",
+				"quantity": 2
+			}
+		},
+		"copyAttributesFrom": "T",
+		"output": {
+			"type": "block",
+			"code": "tansu3-east"
+		}
+	},
+	{
+		"ingredientPattern": "T",
+		"width": 1,
+		"height": 1,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "tansu-east",
+				"quantity": 4
+			}
+		},
+		"copyAttributesFrom": "T",
+		"output": {
+			"type": "block",
+			"code": "tansu3-east"
+		}
+	},
+	{
+		"ingredientPattern": "TT,TT",
+		"width": 2,
+		"height": 2,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "tansu-east",
+				"quantity": 1
+			}
+		},
+		"copyAttributesFrom": "T",
+		"output": {
+			"type": "block",
+			"code": "tansu3-east"
+		}
+	}
+]

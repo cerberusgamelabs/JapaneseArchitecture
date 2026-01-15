@@ -1,0 +1,20 @@
+[
+	{
+		"ingredientPattern": "T",
+		"width": 1,
+		"height": 1,
+		"ingredients": {
+			"T": {
+				"type": "block",
+				"code": "japanesearchitecture:tatamihalf-*-north",
+				"name": "wood",
+        "allowedVariants": [ "acacia", "birch", "ebony", "kapok", "larch", "maple", "oak", "pine", "purpleheart", "redwood", "walnut" ],
+				"quantity": 1
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "tatamimid-{wood}-north"
+		}
+	}
+]

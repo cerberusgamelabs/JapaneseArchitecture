@@ -1,0 +1,10 @@
+{
+	"ingredientPattern": "N,P",
+	"ingredients": {
+		"N": { "type": "item", "code": "nata-*", "isTool": true},
+		"P": { "type": "item", "code": "game:plank-oak" }
+	},
+	"width": 1,
+	"height": 2,
+	"output": { "type": "item", "code": "oakframe", "quantity": 3 }
+}

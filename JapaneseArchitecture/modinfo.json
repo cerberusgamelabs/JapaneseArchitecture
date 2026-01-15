@@ -1,0 +1,13 @@
+{
+  "type": "code",
+  "modid": "japanesearchitecture",
+  "name": "Japanese Architecture",
+  "authors": [
+    "LilianaXolkiyr"
+  ],
+  "description": "Various bits of Japanese Architecture including, but not limited to, Shoji Walls, Doors, Garasu Walls and variants of such.",
+  "version": "0.9.5",
+  "dependencies": {
+    "game": "1.21.6"
+  }
+}

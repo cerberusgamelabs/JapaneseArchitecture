@@ -1,0 +1,22 @@
+[
+	{
+		"ingredientPattern": "PO",
+		"ingredients": {
+			"O": { "type": "item", "code": "game:fat"},
+			"P": { "type": "item", "code": "game:plank-pine", "quantity": 6 }
+		},
+		"width": 2,
+		"height": 1,
+		"output": { "type": "item", "code": "yakimatsuitoplank-pine-oiled", "quantity": 6 }
+	},
+	{
+		"ingredientPattern": "PO",
+		"ingredients": {
+			"O": { "type": "item", "code": "game:fat"},
+			"P": { "type": "item", "code": "game:plank-redwood", "quantity": 6 }
+		},
+		"width": 2,
+		"height": 1,
+		"output": { "type": "item", "code": "yakimatsuitoplank-redwood-oiled", "quantity": 6 }
+	}
+]

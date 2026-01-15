@@ -1,0 +1,9 @@
+	{
+	"code": "lacqueredwood",
+	"sealHours": 12,
+	"ingredients": [
+		{ "type": "item", "code": "japanesearchitecture:resinlacquerportion", "litres": 1 },
+		{ "type": "block", "code": "game:log-placed-oak-ud", "quantity": 2 }
+	],
+	"output": { "type": "block", "code": "lacqueredwood", "quantity": 2 }
+  }

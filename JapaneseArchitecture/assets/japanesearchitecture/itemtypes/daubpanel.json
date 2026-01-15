@@ -1,0 +1,57 @@
+{
+	"code": "daubpanel",
+	"class": "ItemPlank",
+	"behaviors": [{
+		"name": "GroundStorable",
+		"properties": {
+			"layout": "Stacking",
+			"placeRemoveSound": "sounds/block/ceramicplace",
+			"stackingModel": "japanesearchitecture:block/daubpanelpile",
+			"stackingTextures": {
+				"base": "game:block/clay/daub/ash/normal1"
+			},
+			"modelItemsToStackSizeRatio": 1,
+			"stackingCapacity": 240,
+			"collisionBox": { "x1": 0.0625, "y1": 0, "z1": 0.0625, "x2": 0.9375, "y2": 0.0625, "z2": 0.9375 },
+			"cbScaleYByLayer": 0.0666,
+			"transferQuantity": 1,
+			"bulkTransferQuantity": 5,
+			"burnHoursPerItem": 0.166666667
+		}
+	}],
+	"variantgroups": [],
+	"maxstacksize": 64,
+	"shape": { "base": "item/daubpanel" },
+	"textures": {
+		"normal1": { "base": "game:block/clay/daub/ash/normal1" }
+	},
+	"creativeinventory": { "general": ["*"], "items": ["*"], "japanesearchitectureitems": [ "*" ] },
+	"attributes": {
+		
+	},
+	"materialDensity": 700,
+	"guiTransform": {
+		"translation": { "x": 0, "y": 2, "z": 0 },
+		"rotation": { "x": -55, "y": 94, "z": 27 },
+		"origin": { "x": 0.5, "y": 0, "z": 0.45 },
+		"scale": 1.86
+	},
+	"groundTransform": {
+		"translation": { "x": 0, "y": 0, "z": 0 },
+		"rotation": { "x": 0, "y": 0, "z": 0 },
+		"origin": { "x": 0.5, "y": 0, "z": 0.5 },
+		"scale": 1
+	},
+	"fpHandTransform": {
+		"translation": { "x": 0, "y": 0, "z": 0 },
+		"rotation": { "x": 3, "y": -33, "z": -25 },
+		"origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+		"scale": 1.98
+	},
+	"tpHandTransform": {
+		"translation": { "x": -0.6, "y": -0.06, "z": -0.44 },
+		"rotation": { "x": 109, "y": 51, "z": 1 },
+		"origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+		"scale": 0.86
+	}
+}

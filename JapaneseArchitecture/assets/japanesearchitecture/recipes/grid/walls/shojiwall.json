@@ -1,0 +1,49 @@
+[
+	{
+		"ingredientPattern": "FDF,FDF,FPF",
+		"width": 3,
+		"height": 3,
+		"ingredients": {
+			"F": {
+				"type": "item",
+				"code": "japanesearchitecture:oakframe",
+				"quantity": 2
+			},
+			"D": {
+				"type": "item",
+				"code": "japanesearchitecture:daubpanel",
+				"quantity": 12
+			},
+			"P": {
+				"type": "item",
+				"code": "game:plank-*",
+			"name": "wood",
+      "allowedVariants": [ "maple", "pine", "acacia", "walnut", "purpleheart", "ebony" ],
+				"quantity": 2
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "shojiwall-{wood}-north"
+		}
+	},
+	{
+		"ingredientPattern": "W",
+		"width": 1,
+		"height": 1,
+		"ingredients": {
+			"W": {
+				"type": "block",
+				"code": "japanesearchitecture:shojiwallcorner-*-north",
+			"name": "wood",
+      "allowedVariants": [ "maple", "pine", "acacia", "walnut", "purpleheart", "ebony" ],
+				"quantity": 1
+			}
+		},
+		"output": {
+			"type": "block",
+			"code": "shojiwall-{wood}-north",
+			"quantity": 2
+		}
+	}
+]

@@ -1,0 +1,18 @@
+{
+	"ingredientPattern": "W_,_W",
+	"width": 2,
+	"height": 2,
+	"ingredients": {
+		"W": {
+			"type": "block",
+			"code": "japanesearchitecture:yakimatsuitowall-*-north",
+			"name": "material",
+      "allowedVariants": [ "pine-oiled", "pine-light", "pine-moderate", "pine-charred", "redwood-oiled", "redwood-light", "redwood-moderate", "redwood-charred" ],
+			"quantity": 1
+		}
+	},
+	"output": {
+		"type": "block",
+		"code": "yakimatsuitowallcorner-{material}-north"
+	}
+}
