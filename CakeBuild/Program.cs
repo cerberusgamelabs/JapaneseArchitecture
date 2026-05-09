@@ -5,6 +5,7 @@ using Cake.Common.IO;
 using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.DotNet.Clean;
 using Cake.Common.Tools.DotNet.Publish;
+using Cake.Common.Tools.DotNet.Restore;
 using Cake.Core;
 using Cake.Frosting;
 using Cake.Json;
@@ -74,6 +75,12 @@ namespace CakeBuild
     {
         public override void Run(BuildContext context)
         {
+            context.DotNetRestore($"../{BuildContext.ProjectName}/{BuildContext.ProjectName}.csproj",
+                new DotNetRestoreSettings
+                {
+                    Configuration = context.BuildConfiguration
+                });
+
             context.DotNetClean($"../{BuildContext.ProjectName}/{BuildContext.ProjectName}.csproj",
                 new DotNetCleanSettings
                 {
@@ -98,7 +105,7 @@ namespace CakeBuild
             context.EnsureDirectoryExists("../Releases");
             context.CleanDirectory("../Releases");
             context.EnsureDirectoryExists($"../Releases/{context.Name}");
-            context.CopyFiles($"../{BuildContext.ProjectName}/bin/{context.BuildConfiguration}/Mods/mod/publish/*", $"../Releases/{context.Name}");
+            context.CopyFiles($"../Releases/_publish/mod/*", $"../Releases/{context.Name}");
             if (context.DirectoryExists($"../{BuildContext.ProjectName}/assets"))
             {
                 context.CopyDirectory($"../{BuildContext.ProjectName}/assets", $"../Releases/{context.Name}/assets");

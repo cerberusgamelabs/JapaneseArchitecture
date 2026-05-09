@@ -6,8 +6,8 @@
     "LilianaXolkiyr"
   ],
   "description": "Various bits of Japanese Architecture including, but not limited to, Shoji Walls, Doors, Garasu Walls and variants of such.",
-  "version": "0.9.5",
+  "version": "0.9.7",
   "dependencies": {
-    "game": "1.21.6"
+    "game": "1.22.2"
   }
 }

@@ -126,7 +126,7 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
 
             if (Api.Side == EnumAppSide.Client) {
                 if (doorBh.animatableOrigMesh == null) {
-                    string animkey = "door-" + Blockentity.Block.Variant["style"];
+                    string animkey = Block.Shape.ToString();
                     doorBh.animatableOrigMesh = animUtil.CreateMesh(animkey, null, out Shape shape, null);
                     doorBh.animatableShape = shape;
                     doorBh.animatableDictKey = animkey;
@@ -141,6 +141,10 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
         }
 
         protected virtual void UpdateMeshAndAnimations() {
+            if (doorBh.animatableOrigMesh == null || animUtil == null) {
+                return;
+            }
+
             mesh = doorBh.animatableOrigMesh.Clone();
             if (RotateYRad != 0) {
                 float rot = invertHandles ? -RotateYRad : RotateYRad;
@@ -277,8 +281,12 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
         }
 
         public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tessThreadTesselator) {
+            if (mesh == null) {
+                UpdateMeshAndAnimations();
+            }
+
             bool skipMesh = base.OnTesselation(mesher, tessThreadTesselator);
-            if (!skipMesh) {
+            if (!skipMesh && mesh != null) {
                 mesher.AddMeshData(mesh);
             }
             return true;

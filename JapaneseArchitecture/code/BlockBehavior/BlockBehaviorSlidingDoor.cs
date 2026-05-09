@@ -10,6 +10,9 @@ using Vintagestory.GameContent;
 
 namespace JapaneseArchitecture.code.BlockBehavior {
     public class BlockBehaviorSlidingDoor : StrongBlockBehavior, IMultiBlockColSelBoxes, IMultiBlockBlockProperties {
+        const float OpenOffsetX = 0.8125f;
+        const float OpenOffsetZ = -0.109375f;
+
         public AssetLocation OpenSound;
         public AssetLocation CloseSound;
         public int width;
@@ -261,16 +264,34 @@ namespace JapaneseArchitecture.code.BlockBehavior {
         }
 
         public override Cuboidf GetParticleBreakBox(IBlockAccessor blockAccess, BlockPos pos, BlockFacing facing, ref EnumHandling handled) {
-            return base.GetParticleBreakBox(blockAccess, pos, facing, ref handled);
+            handled = EnumHandling.PreventSubsequent;
+
+            var beh = blockAccess.GetBlockEntity(pos)?.GetBehavior<BEBehaviorSlidingDoor>();
+            var boxes = beh?.ColSelBoxes;
+            if (boxes == null || boxes.Length == 0) {
+                return base.GetParticleBreakBox(blockAccess, pos, facing, ref handled);
+            }
+
+            Cuboidf box = boxes[0];
+            for (int i = 1; i < boxes.Length; i++) {
+                box = new Cuboidf(
+                    Math.Min(box.X1, boxes[i].X1),
+                    Math.Min(box.Y1, boxes[i].Y1),
+                    Math.Min(box.Z1, boxes[i].Z1),
+                    Math.Max(box.X2, boxes[i].X2),
+                    Math.Max(box.Y2, boxes[i].Y2),
+                    Math.Max(box.Z2, boxes[i].Z2)
+                );
+            }
+
+            return box;
         }
 
         public override void GetDecal(IWorldAccessor world, BlockPos pos, ITexPositionSource decalTexSource, ref MeshData decalModelData, ref MeshData blockModelData, ref EnumHandling handled) {
             var beh = world.BlockAccessor.GetBlockEntity(pos)?.GetBehavior<BEBehaviorSlidingDoor>();
 
             if (beh.Opened) {
-                float rot = beh.InvertHandles ? 90 : -90;
-                decalModelData = decalModelData.Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0, rot * GameMath.DEG2RAD, 0);
-                if (!beh.InvertHandles) decalModelData = decalModelData.Scale(new Vec3f(0.5f, 0.5f, 0.5f), 1, 1f, -1);
+                decalModelData = decalModelData.Translate(beh.InvertHandles ? OpenOffsetX : -OpenOffsetX, 0, OpenOffsetZ);
             }
             base.GetDecal(world, pos, decalTexSource, ref decalModelData, ref blockModelData, ref handled);
         }
