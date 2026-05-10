@@ -28,6 +28,7 @@ namespace CakeBuild
     public class BuildContext : FrostingContext
     {
         public const string ProjectName = "JapaneseArchitecture";
+        public const string PublishDirectory = "../Releases/_publish/mod";
         public string BuildConfiguration { get; }
         public string Version { get; }
         public string Name { get; }
@@ -76,10 +77,7 @@ namespace CakeBuild
         public override void Run(BuildContext context)
         {
             context.DotNetRestore($"../{BuildContext.ProjectName}/{BuildContext.ProjectName}.csproj",
-                new DotNetRestoreSettings
-                {
-                    Configuration = context.BuildConfiguration
-                });
+                new DotNetRestoreSettings());
 
             context.DotNetClean($"../{BuildContext.ProjectName}/{BuildContext.ProjectName}.csproj",
                 new DotNetCleanSettings
@@ -91,7 +89,8 @@ namespace CakeBuild
             context.DotNetPublish($"../{BuildContext.ProjectName}/{BuildContext.ProjectName}.csproj",
                 new DotNetPublishSettings
                 {
-                    Configuration = context.BuildConfiguration
+                    Configuration = context.BuildConfiguration,
+                    OutputDirectory = BuildContext.PublishDirectory
                 });
         }
     }
@@ -103,9 +102,9 @@ namespace CakeBuild
         public override void Run(BuildContext context)
         {
             context.EnsureDirectoryExists("../Releases");
-            context.CleanDirectory("../Releases");
             context.EnsureDirectoryExists($"../Releases/{context.Name}");
-            context.CopyFiles($"../Releases/_publish/mod/*", $"../Releases/{context.Name}");
+            context.CleanDirectory($"../Releases/{context.Name}");
+            context.CopyFiles($"{BuildContext.PublishDirectory}/*", $"../Releases/{context.Name}");
             if (context.DirectoryExists($"../{BuildContext.ProjectName}/assets"))
             {
                 context.CopyDirectory($"../{BuildContext.ProjectName}/assets", $"../Releases/{context.Name}/assets");
@@ -114,6 +113,10 @@ namespace CakeBuild
             if (context.FileExists($"../{BuildContext.ProjectName}/modicon.png"))
             {
                 context.CopyFile($"../{BuildContext.ProjectName}/modicon.png", $"../Releases/{context.Name}/modicon.png");
+            }
+            if (context.FileExists($"../Releases/{context.Name}_{context.Version}.zip"))
+            {
+                context.DeleteFile($"../Releases/{context.Name}_{context.Version}.zip");
             }
             context.Zip($"../Releases/{context.Name}", $"../Releases/{context.Name}_{context.Version}.zip");
         }

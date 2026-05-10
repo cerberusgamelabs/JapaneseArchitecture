@@ -45,6 +45,8 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
         public bool Opened => opened;
         public bool InvertHandles => invertHandles;
 
+        public Vec3i? OpenInteractionProxyOffset => GetOpenInteractionProxyOffset();
+
         public BEBehaviorSlidingDoor(BlockEntity blockentity) : base(blockentity) {
             boxesClosed = blockentity.Block.CollisionBoxes;
 
@@ -55,6 +57,7 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
             base.Initialize(api, properties);
 
             SetupRotationsAndColSelBoxes(false);
+            UpdateOpenInteractionProxyBlocks();
 
             if (opened && animUtil != null && !animUtil.activeAnimationsByAnimCode.ContainsKey("opened")) {
                 ToggleDoorWing(true);
@@ -189,6 +192,29 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
             boxesOpened = boxesopened;
         }
 
+        private Vec3i? GetOpenInteractionProxyOffset() {
+            if (boxesClosed == null || boxesOpened == null || boxesClosed.Length == 0 || boxesOpened.Length == 0) {
+                return null;
+            }
+
+            float offsetX = 0;
+            float offsetZ = 0;
+            int count = Math.Min(boxesClosed.Length, boxesOpened.Length);
+            for (int i = 0; i < count; i++) {
+                offsetX += ((boxesOpened[i].X1 + boxesOpened[i].X2) - (boxesClosed[i].X1 + boxesClosed[i].X2)) / 2f;
+                offsetZ += ((boxesOpened[i].Z1 + boxesOpened[i].Z2) - (boxesClosed[i].Z1 + boxesClosed[i].Z2)) / 2f;
+            }
+
+            int proxyX = (int)Math.Round(offsetX / count);
+            int proxyZ = (int)Math.Round(offsetZ / count);
+
+            if (proxyX == 0 && proxyZ == 0) {
+                return null;
+            }
+
+            return new Vec3i(proxyX, 0, proxyZ);
+        }
+
         public virtual void OnBlockPlaced(ItemStack byItemStack, IPlayer byPlayer, BlockSelection blockSel) {
             if (byItemStack == null) return; // Placed by worldgen
 
@@ -229,6 +255,13 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
                 return;
             }
 
+            if (opened && !this.opened && IsOpenPathBlockedForAnyWing()) {
+                if (Api.Side == EnumAppSide.Client && byPlayer != null) {
+                    (Api as ICoreClientAPI)?.TriggerIngameError(this, "doorblocked", Lang.Get("This door is blocked."));
+                }
+                return;
+            }
+
             this.opened = opened;
             ToggleDoorWing(opened);
 
@@ -242,15 +275,159 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
 
             if (leftDoor != null && invertHandles) {
                 leftDoor.ToggleDoorWing(opened);
+                leftDoor.UpdateOpenInteractionProxyBlocks();
                 leftDoor.UpdateNeighbors();
             } else if (rightDoor != null) {
                 rightDoor.ToggleDoorWing(opened);
+                rightDoor.UpdateOpenInteractionProxyBlocks();
                 rightDoor.UpdateNeighbors();
             }
 
             be.MarkDirty(true);
+            UpdateOpenInteractionProxyBlocks();
 
             UpdateNeighbors();
+        }
+
+        private bool IsOpenPathBlockedForAnyWing() {
+            if (IsOpenPathBlocked(this)) {
+                return true;
+            }
+
+            if (leftDoor != null && invertHandles && IsOpenPathBlocked(leftDoor)) {
+                return true;
+            }
+
+            if (rightDoor != null && IsOpenPathBlocked(rightDoor)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsOpenPathBlocked(BEBehaviorSlidingDoor door) {
+            if (door?.Api?.World == null || door.boxesClosed == null || door.boxesOpened == null) {
+                return false;
+            }
+
+            HashSet<Vec3i> closedOffsets = GetOccupiedOffsets(door.boxesClosed);
+            HashSet<Vec3i> openedOffsets = GetOccupiedOffsets(door.boxesOpened);
+
+            foreach (Vec3i offset in openedOffsets) {
+                if (closedOffsets.Contains(offset)) {
+                    continue;
+                }
+
+                for (int y = 0; y < door.doorBh.height; y++) {
+                    BlockPos checkPos = door.Pos.AddCopy(offset.X, y, offset.Z);
+                    Block existingBlock = door.Api.World.BlockAccessor.GetBlock(checkPos, BlockLayersAccess.Solid);
+                    if (existingBlock.Id == 0) {
+                        continue;
+                    }
+
+                    if (existingBlock is BlockMultiblock existingMb) {
+                        BlockPos rootPos = checkPos.AddCopy(existingMb.OffsetInv);
+                        if (rootPos == door.Pos || door.leftDoor != null && rootPos == door.leftDoor.Pos || door.rightDoor != null && rootPos == door.rightDoor.Pos) {
+                            continue;
+                        }
+                    }
+
+                    if (existingBlock.IsReplacableBy(door.Block)) {
+                        continue;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private HashSet<Vec3i> GetOccupiedOffsets(Cuboidf[] boxes) {
+            HashSet<Vec3i> offsets = new HashSet<Vec3i>(new Vec3iComparer());
+            const float epsilon = 0.0001f;
+
+            foreach (Cuboidf box in boxes) {
+                int minX = (int)Math.Floor(box.X1 + epsilon);
+                int maxX = (int)Math.Ceiling(box.X2 - epsilon) - 1;
+                int minZ = (int)Math.Floor(box.Z1 + epsilon);
+                int maxZ = (int)Math.Ceiling(box.Z2 - epsilon) - 1;
+
+                for (int x = minX; x <= maxX; x++) {
+                    for (int z = minZ; z <= maxZ; z++) {
+                        offsets.Add(new Vec3i(x, 0, z));
+                    }
+                }
+            }
+
+            if (offsets.Count == 0) {
+                offsets.Add(new Vec3i());
+            }
+
+            return offsets;
+        }
+
+        internal void UpdateOpenInteractionProxyBlocks(bool clearOnly = false) {
+            if (Api?.Side != EnumAppSide.Server) {
+                return;
+            }
+
+            Vec3i? proxyOffset = clearOnly ? null : OpenInteractionProxyOffset;
+
+            for (int y = 0; y < doorBh.height; y++) {
+                if (proxyOffset != null) {
+                    BlockPos proxyPos = Pos.AddCopy(proxyOffset.X, y, proxyOffset.Z);
+                    Block existingBlock = Api.World.BlockAccessor.GetBlock(proxyPos);
+                    BlockMultiblock existingMb = existingBlock as BlockMultiblock;
+
+                    bool canPlaceProxy = existingBlock.Id == 0 || existingMb != null && proxyPos.AddCopy(existingMb.OffsetInv) == Pos;
+                    if (canPlaceProxy) {
+                        int dx = proxyOffset.X;
+                        int dy = y;
+                        int dz = proxyOffset.Z;
+
+                        string sdx = (dx < 0 ? "n" : dx > 0 ? "p" : "") + Math.Abs(dx);
+                        string sdy = (dy < 0 ? "n" : dy > 0 ? "p" : "") + Math.Abs(dy);
+                        string sdz = (dz < 0 ? "n" : dz > 0 ? "p" : "") + Math.Abs(dz);
+
+                        AssetLocation loc = new AssetLocation("multiblock-monolithic-" + sdx + "-" + sdy + "-" + sdz);
+                        Block proxyBlock = Api.World.GetBlock(loc);
+                        if (proxyBlock != null && proxyBlock.Id != 0) {
+                            Api.World.BlockAccessor.SetBlock(proxyBlock.Id, proxyPos);
+                        }
+                    }
+                }
+
+                foreach (Vec3i staleOffset in GetLegacyOpenInteractionProxyOffsets(proxyOffset)) {
+                    BlockPos stalePos = Pos.AddCopy(staleOffset.X, y, staleOffset.Z);
+                    Block staleBlock = Api.World.BlockAccessor.GetBlock(stalePos);
+                    if (staleBlock is BlockMultiblock staleMb && stalePos.AddCopy(staleMb.OffsetInv) == Pos) {
+                        Api.World.BlockAccessor.SetBlock(0, stalePos);
+                    }
+                }
+            }
+        }
+
+        private Vec3i[] GetLegacyOpenInteractionProxyOffsets(Vec3i? activeOffset) {
+            Vec3i[] candidates = new[] {
+                new Vec3i(-1, 0, 0),
+                new Vec3i(1, 0, 0),
+                new Vec3i(0, 0, -1),
+                new Vec3i(0, 0, 1)
+            };
+
+            int count = 0;
+            Vec3i[] staleOffsets = new Vec3i[candidates.Length];
+            for (int i = 0; i < candidates.Length; i++) {
+                if (activeOffset != null && candidates[i].X == activeOffset.X && candidates[i].Z == activeOffset.Z) {
+                    continue;
+                }
+
+                staleOffsets[count++] = candidates[i];
+            }
+
+            Array.Resize(ref staleOffsets, count);
+            return staleOffsets;
         }
 
         private void UpdateNeighbors() {
@@ -342,6 +519,16 @@ namespace JapaneseArchitecture.code.BlockEntityBehavior {
             RotateYRad = tree.GetFloat("rotateYRad");
             RotateYRad = (RotateYRad - degreeRotation * GameMath.DEG2RAD) % GameMath.TWOPI;
             tree.SetFloat("rotateYRad", RotateYRad);
+        }
+
+        private class Vec3iComparer : IEqualityComparer<Vec3i> {
+            public bool Equals(Vec3i? a, Vec3i? b) {
+                return a != null && b != null && a.X == b.X && a.Y == b.Y && a.Z == b.Z;
+            }
+
+            public int GetHashCode(Vec3i value) {
+                return HashCode.Combine(value.X, value.Y, value.Z);
+            }
         }
     }
 }

@@ -184,6 +184,7 @@ namespace JapaneseArchitecture.code.BlockBehavior {
         public override void OnBlockRemoved(IWorldAccessor world, BlockPos pos, ref EnumHandling handling) {
             if (world.Side == EnumAppSide.Client) return;
             var beh = world.BlockAccessor.GetBlockEntity(pos)?.GetBehavior<BEBehaviorSlidingDoor>();
+            beh?.UpdateOpenInteractionProxyBlocks(true);
 
             var rotRad = beh?.RotateYRad ?? 0;
 
@@ -228,6 +229,11 @@ namespace JapaneseArchitecture.code.BlockBehavior {
         private static Cuboidf[] getColSelBoxes(IBlockAccessor blockAccessor, BlockPos pos, Vec3i offset) {
             var beh = blockAccessor.GetBlockEntity(pos.AddCopy(offset.X, offset.Y, offset.Z))?.GetBehavior<BEBehaviorSlidingDoor>();
             if (beh == null) return null;
+
+            Vec3i? proxyOffset = beh.OpenInteractionProxyOffset;
+            if (proxyOffset != null && offset.X == -proxyOffset.X && offset.Z == -proxyOffset.Z) {
+                return beh.ColSelBoxes;
+            }
 
             // Works only for 1 and 2 wide doors
             // Would need to loop across width to make n-width doors
