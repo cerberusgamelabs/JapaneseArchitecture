@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JapaneseArchitecture.code.ThinWall;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -38,8 +39,9 @@ namespace JapaneseArchitecture.code.BlockEntities {
 
             ItemStack oneStack = sourceSlot.Itemstack.Clone();
             oneStack.StackSize = 1;
+            ItemStack canonicalSourceStack = SanitizeCanonicalSourceStack(oneStack);
 
-            ItemStack orientedStack = CreateMountedStack(oneStack, clickedFace);
+            ItemStack orientedStack = CreateMountedStack(oneStack, canonicalSourceStack ?? oneStack, clickedFace);
             if (orientedStack == null) {
                 return false;
             }
@@ -48,7 +50,7 @@ namespace JapaneseArchitecture.code.BlockEntities {
             sourceSlot.MarkDirty();
 
             mountedLightStacks[slotIndex] = orientedStack;
-            mountedSourceStacks[slotIndex] = SanitizeCanonicalSourceStack(oneStack);
+            mountedSourceStacks[slotIndex] = canonicalSourceStack;
             LogTorchStack("Mount source", oneStack);
             LogTorchStack("Mount stored source", mountedSourceStacks[slotIndex]);
             LogTorchStack("Mount oriented", orientedStack);
@@ -123,13 +125,26 @@ namespace JapaneseArchitecture.code.BlockEntities {
 
         public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tessThreadTesselator) {
             for (int i = 0; i < mountedLightStacks.Length; i++) {
-                if (mountedLightStacks[i]?.Collectible is Vintagestory.API.Common.Block mountedBlock) {
-                    tessThreadTesselator.TesselateBlock(mountedBlock, out MeshData mesh);
-                    if (mesh != null) {
-                        Vec3f offset = GetMountOffset(i);
-                        mesh.Translate(offset.X, offset.Y, offset.Z);
-                        mesher.AddMeshData(mesh);
-                    }
+                ItemStack mountedStack = mountedLightStacks[i];
+                if (mountedStack?.Collectible is not Vintagestory.API.Common.Block mountedBlock) {
+                    continue;
+                }
+
+                MeshData mesh = null;
+                if (TryTesselateLanternMesh(tessThreadTesselator, mountedStack, out mesh)) {
+                } else if (mountedStack.Collectible is ICollectibleDisplayable displayable) {
+                    DummySlot displaySlot = new DummySlot(mountedStack);
+                    mesh = displayable.GetMeshDataForDisplay(displaySlot, "displaycase");
+                }
+
+                if (mesh == null) {
+                    tessThreadTesselator.TesselateBlock(mountedBlock, out mesh);
+                }
+
+                if (mesh != null) {
+                    Vec3f offset = GetMountOffset(i);
+                    mesh.Translate(offset.X, offset.Y, offset.Z);
+                    mesher.AddMeshData(mesh);
                 }
             }
 
@@ -150,7 +165,7 @@ namespace JapaneseArchitecture.code.BlockEntities {
             Api.World.BlockAccessor.MarkBlockModified(Pos);
         }
 
-        ItemStack CreateMountedStack(ItemStack sourceStack, BlockFacing clickedFace) {
+        ItemStack CreateMountedStack(ItemStack sourceStack, ItemStack canonicalSourceStack, BlockFacing clickedFace) {
             if (clickedFace == null) {
                 return null;
             }
@@ -162,9 +177,9 @@ namespace JapaneseArchitecture.code.BlockEntities {
             }
 
             ItemStack mountedStack = new ItemStack(mountedBlock, 1);
-            mountedStack.Attributes = sourceStack.Attributes?.Clone() ?? new TreeAttribute();
-            mountedStack.Attributes.SetString(OriginalCodeAttribute, sourceStack.Collectible.Code.ToShortString());
-            mountedStack.Attributes.SetItemstack(OriginalStackAttribute, sourceStack.Clone());
+            mountedStack.Attributes = canonicalSourceStack?.Attributes?.Clone() ?? sourceStack.Attributes?.Clone() ?? new TreeAttribute();
+            mountedStack.Attributes.SetString(OriginalCodeAttribute, canonicalSourceStack?.Collectible?.Code?.ToShortString() ?? sourceStack.Collectible.Code.ToShortString());
+            mountedStack.Attributes.SetItemstack(OriginalStackAttribute, (canonicalSourceStack ?? sourceStack).Clone());
 
             return mountedStack;
         }
@@ -244,19 +259,16 @@ namespace JapaneseArchitecture.code.BlockEntities {
                 return null;
             }
 
-            if (sourceStack.Collectible is Vintagestory.GameContent.BlockTorch && originalCode.StartsWith("torch-", StringComparison.Ordinal)) {
-                AssetLocation upCode = ReplaceLastCodePart(sourceStack.Collectible.Code, "up");
-                CollectibleObject upCollectible = Api?.World?.GetBlock(upCode);
-                if (upCollectible != null) {
-                    return upCollectible;
+            AssetLocation canonicalCode = GetCanonicalMountedSourceCode(sourceStack.Collectible.Code);
+            if (canonicalCode != null) {
+                CollectibleObject canonicalCollectible = GetCollectible(canonicalCode);
+                if (canonicalCollectible != null) {
+                    return canonicalCollectible;
                 }
             }
 
             originalCode = NormalizeRestoredCode(originalCode);
-
-            CollectibleObject originalCollectible = Api?.World?.GetBlock(new AssetLocation(originalCode));
-            originalCollectible ??= Api?.World?.GetItem(new AssetLocation(originalCode));
-            return originalCollectible;
+            return GetCollectible(new AssetLocation(originalCode));
         }
 
         void LogTorchStack(string label, ItemStack stack) {
@@ -276,6 +288,22 @@ namespace JapaneseArchitecture.code.BlockEntities {
 
         Vec3f GetMountOffset(int slotIndex) {
             return ThinWallFaceData.GetMountOffset(Block, slotIndex);
+        }
+
+        bool TryTesselateLanternMesh(ITesselatorAPI tessThreadTesselator, ItemStack mountedStack, out MeshData mesh) {
+            mesh = null;
+
+            if (Api is not ICoreClientAPI || mountedStack?.Collectible is not Vintagestory.API.Common.Block mountedBlock) {
+                return false;
+            }
+
+            if (!(mountedBlock.Code?.Path?.StartsWith("lantern-", StringComparison.Ordinal) ?? false) || mountedBlock.Shape == null) {
+                return false;
+            }
+
+            LanternTextureSource texSource = new LanternTextureSource(tessThreadTesselator, mountedBlock, mountedStack);
+            tessThreadTesselator.TesselateShape("thinwall-mounted-lantern", mountedBlock.Code, mountedBlock.Shape, out mesh, texSource, 0, 0, 0, null, null);
+            return mesh != null;
         }
 
         byte[] GetCombinedLightHsv() {
@@ -329,6 +357,64 @@ namespace JapaneseArchitecture.code.BlockEntities {
             }
 
             return code;
+        }
+
+        AssetLocation GetCanonicalMountedSourceCode(AssetLocation code) {
+            if (code == null || string.IsNullOrEmpty(code.Path)) {
+                return null;
+            }
+
+            if (
+                code.Path.StartsWith("torch-", StringComparison.Ordinal) ||
+                code.Path.StartsWith("lantern-", StringComparison.Ordinal) ||
+                code.Path.StartsWith("oillamp-", StringComparison.Ordinal)
+            ) {
+                return ReplaceLastCodePart(code, "up");
+            }
+
+            string normalized = NormalizeRestoredCode(code.ToShortString());
+            return normalized == code.ToShortString() ? code : new AssetLocation(normalized);
+        }
+
+        CollectibleObject GetCollectible(AssetLocation code) {
+            if (code == null) {
+                return null;
+            }
+
+            CollectibleObject collectible = Api?.World?.GetBlock(code);
+            if (collectible is Vintagestory.API.Common.Block block && block.Id != 0) {
+                return block;
+            }
+
+            collectible = Api?.World?.GetItem(code);
+            return collectible?.Id > 0 ? collectible : null;
+        }
+
+        class LanternTextureSource : ITexPositionSource {
+            readonly ITexPositionSource fallback;
+            readonly Dictionary<string, string> remappedKeys = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            public Size2i AtlasSize => fallback.AtlasSize;
+
+            public TextureAtlasPosition this[string textureCode] {
+                get {
+                    if (remappedKeys.TryGetValue(textureCode, out string remappedKey)) {
+                        return fallback[remappedKey];
+                    }
+
+                    return fallback[textureCode];
+                }
+            }
+
+            public LanternTextureSource(ITesselatorAPI tessellator, Vintagestory.API.Common.Block block, ItemStack stack) {
+                fallback = tessellator.GetTextureSource(block, 0, false);
+
+                string material = stack.Attributes?.GetString("material", "copper") ?? "copper";
+                remappedKeys["material"] = material;
+                remappedKeys["lining"] = material;
+                remappedKeys["material-grid"] = "grid-" + material;
+                remappedKeys["material-diamond"] = "grid-" + material;
+            }
         }
     }
 }
