@@ -1,10 +1,16 @@
 using JapaneseArchitecture.code.BlockEntities;
+using JapaneseArchitecture.code.ThinWall;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace JapaneseArchitecture.code.Blocks {
     public class BlockThinWallMountable : Vintagestory.API.Common.Block {
+        public override void OnLoaded(ICoreAPI api) {
+            base.OnLoaded(api);
+            ThinWallFaceData.ApplySolidFaces(this);
+        }
+
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel) {
             BEThinWallMountable be = ResolveBlockEntity(world.BlockAccessor, blockSel.Position, out _, out int verticalOffset);
             if (be == null) {
@@ -14,7 +20,7 @@ namespace JapaneseArchitecture.code.Blocks {
             ItemSlot activeSlot = byPlayer?.InventoryManager?.ActiveHotbarSlot;
             bool hasSupportedHeldLight = activeSlot?.Empty == false && be.CanAccept(activeSlot.Itemstack);
             bool sneaking = byPlayer?.Entity?.Controls?.Sneak == true;
-            int slotIndex = be.GetSlotIndex(blockSel.Face, verticalOffset, blockSel.HitPosition);
+            int slotIndex = ThinWallFaceData.GetSlotIndex(this, blockSel.Face, verticalOffset, blockSel.HitPosition);
             if (slotIndex < 0) {
                 return hasSupportedHeldLight;
             }

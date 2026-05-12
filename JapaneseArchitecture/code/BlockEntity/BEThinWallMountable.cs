@@ -1,4 +1,5 @@
 using System;
+using JapaneseArchitecture.code.ThinWall;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -6,7 +7,6 @@ using Vintagestory.API.MathTools;
 
 namespace JapaneseArchitecture.code.BlockEntities {
     public class BEThinWallMountable : Vintagestory.API.Common.BlockEntity {
-        const float WallThickness = 2f / 16f;
         const string OriginalCodeAttribute = "jaOriginalCode";
         const string OriginalStackAttribute = "jaOriginalStack";
 
@@ -25,26 +25,6 @@ namespace JapaneseArchitecture.code.BlockEntities {
             return path.StartsWith("torch-", StringComparison.Ordinal)
                 || path.StartsWith("lantern-", StringComparison.Ordinal)
                 || path.StartsWith("oillamp-", StringComparison.Ordinal);
-        }
-
-        public int GetSlotIndex(BlockFacing clickedFace, int verticalOffset, Vec3d hitPosition) {
-            BlockFacing wallFacing = GetWallFacing();
-            if (wallFacing == null) {
-                return -1;
-            }
-
-            int sideIndex;
-            if (clickedFace == wallFacing) {
-                sideIndex = 0;
-            } else if (clickedFace == wallFacing.Opposite) {
-                sideIndex = 1;
-            } else {
-                sideIndex = GetSideIndexFromHitPosition(wallFacing, hitPosition);
-            }
-
-            double hitY = hitPosition?.Y ?? 0;
-            int heightIndex = verticalOffset > 0 || hitY < 0.5 ? 1 : 0;
-            return sideIndex * 2 + heightIndex;
         }
 
         public bool HasMountedLight(int slotIndex) {
@@ -281,7 +261,11 @@ namespace JapaneseArchitecture.code.BlockEntities {
 
         void LogTorchStack(string label, ItemStack stack) {
             string code = stack?.Collectible?.Code?.ToShortString() ?? "<null>";
-            if (!code.StartsWith("torch-", StringComparison.Ordinal)) {
+            if (
+                !code.StartsWith("torch-", StringComparison.Ordinal) &&
+                !code.StartsWith("lantern-", StringComparison.Ordinal) &&
+                !code.StartsWith("oillamp-", StringComparison.Ordinal)
+            ) {
                 return;
             }
 
@@ -291,29 +275,7 @@ namespace JapaneseArchitecture.code.BlockEntities {
         }
 
         Vec3f GetMountOffset(int slotIndex) {
-            BlockFacing wallFacing = GetWallFacing();
-            if (wallFacing == null) {
-                return new Vec3f();
-            }
-
-            bool isInnerSide = slotIndex / 2 == 1;
-            bool isUpper = (slotIndex % 2) == 1;
-
-            float x = 0;
-            float y = isUpper ? 1f : 0f;
-            float z = 0;
-
-            if (isInnerSide) {
-                float inset = -WallThickness;
-                x = wallFacing.Normali.X * inset;
-                z = wallFacing.Normali.Z * inset;
-            } else {
-                float inset = 1f;
-                x = wallFacing.Normali.X * inset;
-                z = wallFacing.Normali.Z * inset;
-            }
-
-            return new Vec3f(x, y, z);
+            return ThinWallFaceData.GetMountOffset(Block, slotIndex);
         }
 
         byte[] GetCombinedLightHsv() {
@@ -332,15 +294,6 @@ namespace JapaneseArchitecture.code.BlockEntities {
 
             return brightest;
         }
-
-        BlockFacing GetWallFacing() {
-            if (Block?.Variant == null || !Block.Variant.TryGetValue("side", out string sideCode)) {
-                return null;
-            }
-
-            return BlockFacing.FromCode(sideCode);
-        }
-
         static AssetLocation ReplaceLastCodePart(AssetLocation code, string replacement) {
             string[] parts = code.Path.Split('-');
             if (parts.Length == 0) {
@@ -356,7 +309,11 @@ namespace JapaneseArchitecture.code.BlockEntities {
                 return code;
             }
 
-            if (!(code.StartsWith("torch-", StringComparison.Ordinal) || code.StartsWith("oillamp-", StringComparison.Ordinal))) {
+            if (
+                !code.StartsWith("torch-", StringComparison.Ordinal) &&
+                !code.StartsWith("oillamp-", StringComparison.Ordinal) &&
+                !code.StartsWith("lantern-", StringComparison.Ordinal)
+            ) {
                 return code;
             }
 
@@ -372,20 +329,6 @@ namespace JapaneseArchitecture.code.BlockEntities {
             }
 
             return code;
-        }
-
-        static int GetSideIndexFromHitPosition(BlockFacing wallFacing, Vec3d hitPosition) {
-            if (hitPosition == null) {
-                return 0;
-            }
-
-            if (wallFacing.Axis == EnumAxis.Z) {
-                bool onFacingSide = wallFacing == BlockFacing.NORTH ? hitPosition.Z < 0.5 : hitPosition.Z > 0.5;
-                return onFacingSide ? 0 : 1;
-            }
-
-            bool onXAxisFacingSide = wallFacing == BlockFacing.WEST ? hitPosition.X < 0.5 : hitPosition.X > 0.5;
-            return onXAxisFacingSide ? 0 : 1;
         }
     }
 }
