@@ -8,8 +8,14 @@ using Vintagestory.GameContent;
 namespace JapaneseArchitecture.code.BlockBehavior {
     public class BlockBehaviorThinWallAttachable : StrongBlockBehavior, IMultiBlockBlockProperties {
         readonly HashSet<string> attachmentFaces = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        ICoreAPI api;
 
         public BlockBehaviorThinWallAttachable(Block block) : base(block) {
+        }
+
+        public override void OnLoaded(ICoreAPI api) {
+            this.api = api;
+            base.OnLoaded(api);
         }
 
         public override void Initialize(JsonObject properties) {
@@ -49,7 +55,11 @@ namespace JapaneseArchitecture.code.BlockBehavior {
         }
 
         public int MBGetRetention(BlockPos pos, BlockFacing facing, EnumRetentionType type, Vec3i offset) {
-            return 0;
+            if (api == null) return 0;
+            BlockPos masterPos = pos.AddCopy(offset);
+            Block masterBlock = api.World.BlockAccessor.GetBlock(masterPos);
+            if (masterBlock == null) return 0;
+            return masterBlock.GetRetention(api.World.BlockAccessor, masterPos, facing, type);
         }
 
         BlockFacing GetWallFacing() {

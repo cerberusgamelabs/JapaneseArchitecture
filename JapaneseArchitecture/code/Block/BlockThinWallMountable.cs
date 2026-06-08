@@ -5,7 +5,17 @@ using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace JapaneseArchitecture.code.Blocks {
-    public class BlockThinWallMountable : Vintagestory.API.Common.Block {
+    public class BlockThinWallMountable : Vintagestory.API.Common.Block, IMultiBlockColSelBoxes {
+        public Cuboidf[] MBGetCollisionBoxes(IBlockAccessor blockAccessor, BlockPos pos, Vec3i offset) {
+            Block masterBlock = blockAccessor.GetBlock(pos.AddCopy(offset));
+            return masterBlock?.CollisionBoxes;
+        }
+
+        public Cuboidf[] MBGetSelectionBoxes(IBlockAccessor blockAccessor, BlockPos pos, Vec3i offset) {
+            Block masterBlock = blockAccessor.GetBlock(pos.AddCopy(offset));
+            return masterBlock?.SelectionBoxes;
+        }
+
         public override void OnLoaded(ICoreAPI api) {
             base.OnLoaded(api);
             ThinWallFaceData.ApplySolidFaces(this);
