@@ -59,7 +59,7 @@ namespace JapaneseArchitecture.code.BlockBehavior {
             BlockPos masterPos = pos.AddCopy(offset);
             Block masterBlock = api.World.BlockAccessor.GetBlock(masterPos);
             if (masterBlock == null) return 0;
-            return masterBlock.GetRetention(api.World.BlockAccessor, masterPos, facing, type);
+            return masterBlock.GetRetention(masterPos, facing, type);
         }
 
         BlockFacing GetWallFacing() {
