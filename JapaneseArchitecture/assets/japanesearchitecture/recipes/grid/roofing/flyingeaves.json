@@ -1,0 +1,11 @@
+	{
+		ingredientPattern: "CH_,HHB",
+		ingredients: {
+			"C": { type: "item", code: "game:clay-*", quantity: 1 },
+			"H": { type: "item", code: "game:stone-slate", quantity: 3 },
+			"B": { type: "item", code: "game:stone-slate", quantity: 1 }
+		},
+		width: 3,
+		height: 2,
+		output: { type: "block", code: "japanesearchitecture:slantedroofingflyingeaves-slate-east-free", quantity: 2  }
+	}
