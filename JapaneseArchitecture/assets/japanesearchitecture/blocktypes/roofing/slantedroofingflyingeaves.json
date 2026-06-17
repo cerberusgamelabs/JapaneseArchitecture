@@ -1,0 +1,86 @@
+{
+	"code": "slantedroofingflyingeaves",
+	"class": "BlockSlantedRoofingHalf",
+	"behaviors": [{ "name": "HorizontalOrientable", "properties": { "dropBlockFace": "east" } }],
+	"variantgroups": [
+		{ "code": "material", "states": ["copper", "slate"] },
+		{ "loadFromProperties": "abstract/horizontalorientation" },
+		{ "code": "cover", "states": ["free", "snow"] }
+	],
+	"attributes": {
+		"humanoidTraversalCost": 100,
+		"mapColorCode": "settlement"
+	},
+	"shapeByType": {
+		
+
+
+
+		"@.*-(slate|copper)-north-.*": { "base": "japanesearchitecture:block/roofing/shingles-slate-copper-{cover}", "rotateY": 90 },
+		"@.*-(slate|copper)-west-.*": { "base": "japanesearchitecture:block/roofing/shingles-slate-copper-{cover}", "rotateY": 180 },
+		"@.*-(slate|copper)-south-.*": { "base": "japanesearchitecture:block/roofing/shingles-slate-copper-{cover}", "rotateY": 270 },
+		"@.*-(slate|copper)-east-.*": { "base": "japanesearchitecture:block/roofing/shingles-slate-copper-{cover}", "rotateY": 0 }
+
+	},
+	"texturesByType": {
+		"*-copper-*": {
+			"material": { "base": "game:block/metal/shingles/copper*" }
+		},
+		"*-slate-*": {
+			"material": { "base": "game:block/stone/shingles/slate*" }
+		}
+	},
+	"drawtype": "json",
+	"faceCullMode": "NeverCull",
+	"renderpass": "OpaqueNoCull",
+	"sidesolid": { "all": false, "down": true },
+	"sideopaque": { "all": false },
+	"blockmaterialByType": {
+		"*-copper-*": "Metal",
+		"*-slate-*": "Stone"
+	},
+	"creativeinventory": { "general": ["*-east-free"], "decorative": ["*-east-free"] },
+	"replaceable": 300,
+	"resistance": 2,
+	"lightAbsorption": 99,
+	"emitSideAo": {
+		"all": true
+	},
+	"sideAoByType": { "*-sod-*": { "all": false } },
+	"collisionSelectionBoxesByType": {
+		"*-north-*": [ { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5625, "z2": 1, "rotateY": 90 }, { "x1": 0.625, "y1": 0.5625, "z1": 0.625, "x2": 1, "y2": 1, "z2": 1, "rotateY": 90 } ],
+		"*-west-*": [ { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5625, "z2": 1, "rotateY": 180 }, { "x1": 0.625, "y1": 0.5625, "z1": 0.625, "x2": 1, "y2": 1, "z2": 1, "rotateY": 180 } ],
+		"*-south-*": [ { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5625, "z2": 1, "rotateY": 270 }, { "x1": 0.625, "y1": 0.5625, "z1": 0.625, "x2": 1, "y2": 1, "z2": 1, "rotateY": 270 } ],
+		"*-east-*": [ { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5625, "z2": 1 }, { "x1": 0.625, "y1": 0.5625, "z1": 0.625, "x2": 1, "y2": 1, "z2": 1 } ]
+	},
+	"soundsByType": {
+		
+		"*-copper-*": {
+			"place": "block/chute",
+			"break": "block/chute",
+			"hit": "block/chute",
+			"walk": "walk/stone"
+		},
+		"*-slate-*": {
+			"walk": "game:walk/stone",
+			"place": "game:block/ceramicplace"
+		}
+	},
+	"guiTransformByType": {
+		"*-thatch-*": {
+			"rotation": { "x": -22.6, "y": -40, "z": 0 },
+			"origin": { "x": 0.29, "y": 0.45, "z": 0.44 },
+			"scale": 0.85
+		},
+		"*-agedthatch-*": {
+			"rotation": { "x": -22.6, "y": -40, "z": 0 },
+			"origin": { "x": 0.29, "y": 0.45, "z": 0.44 },
+			"scale": 0.85
+		},
+		"*": {
+			"rotation": { "x": -22.6, "y": -40, "z": 0 },
+			"origin": { "x": 0.53, "y": 0.4, "z": 0.46 },
+			"scale": 0.85
+		}
+	}
+}
